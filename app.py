@@ -5,13 +5,14 @@ from models.db_model import Temperature, db
 import struct
 import datetime
 import socket
+import flask
 
 
 app = Flask(__name__)
 # Configuración de la base de datos de NAS MySQL para Flask SQLAlchemy.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://crisandru:12345@localhost/modbustcp'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://crisandru:12345@localhost/modbustcp'
 
-db.init_app(app)
+#db.init_app(app)
 
 # Configuración de la conexión Modbus TCP/IP.
 IP_ADDRESS = "10.10.100.254" # Nueva dirección IP, esta viene por defecto.
