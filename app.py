@@ -1,11 +1,11 @@
 from flask import Flask, render_template, jsonify
 from pymodbus.client import ModbusTcpClient
 from pymodbus.exceptions import ModbusIOException
-from models.db_model import Temperature, db
+#from models.db_model import Temperature, db
 import struct
 import datetime
-import socket
-import flask
+#import socket
+#import flask
 
 
 app = Flask(__name__)
@@ -60,10 +60,11 @@ def temperature():
 def temperature_average():
     # Obtener la temperatura media de los últimos 5 minutos
     five_minutes_ago = datetime.datetime.now() - datetime.timedelta(minutes=5) # 5 minutos atrás
-    temperatures = Temperature.query.filter(Temperature.timestamp >= five_minutes_ago).all() # Temperaturas de los últimos 5 minutos
-    average_temperature = sum(t.temperature for t in temperatures) / len(temperatures) # Temperatura media de los últimos 5 minutos
-    average_temperature_formatted = "{:.2f} °C".format(average_temperature) # Temperatura media de los últimos 5 minutos formateada
-    return jsonify(average_temperature=average_temperature_formatted) # Devolver la temperatura media de los últimos 5 minutos formateada
-
+    #temperatures = Temperature.query.filter(Temperature.timestamp >= five_minutes_ago).all() # Temperaturas de los últimos 5 minutos
+    #average_temperature = sum(t.temperature for t in temperatures) / len(temperatures) # Temperatura media de los últimos 5 minutos
+    #average_temperature_formatted = "{:.2f} °C".format(average_temperature) # Temperatura media de los últimos 5 minutos formateada
+    #return jsonify(average_temperature=average_temperature_formatted) # Devolver la temperatura media de los últimos 5 minutos formateada
+    return jsonify(average_temperature="0.00 °C")
+    
 if __name__ == "__main__":
     app.run(debug=True)
