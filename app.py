@@ -24,12 +24,11 @@ ADDRESS = 3131
 client = ModbusTcpClient(IP_ADDRESS, PORT)
 #client.socket.settimeout(10.0)  # Configurar tiempo de espera de 10 segundos
 client.connect()
+if client.connect():
+    print("Conectado con éxito al dispositivo Modbus")
+else:
+    print("Error de conexión con el dispositivo Modbus")
 
-#if client.is_socket_connected():
-#    client.socket.settimeout(10.0)  # Configurar tiempo de espera de 10 segundos
-#else:
-#    print("No se ha podido establecer la conexión con el dispositivo Modbus")
-    
 # Ruta de la página principal.
 @app.route("/")
 def index():
