@@ -1,4 +1,4 @@
-from app import app
+from app_tablero import app_tablero
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app_tablero.run(debug=True)

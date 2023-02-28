@@ -1,18 +1,18 @@
 from flask import Flask, render_template, jsonify
 from pymodbus.client import ModbusTcpClient
 from pymodbus.exceptions import ModbusIOException
-#from models.db_model import Temperature, db
+from models.db_model import Temperature, db
 import struct
 import datetime
-#import socket
-#import flask
+import socket
+import flask
 
 
 app = Flask(__name__)
 # Configuración de la base de datos de NAS MySQL para Flask SQLAlchemy.
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://crisandru:12345@localhost/modbustcp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://cris:12345@34.176.16.130/cris_temperatura'
 
-#db.init_app(app)
+db.init_app(app)
 
 # Configuración de la conexión Modbus TCP/IP.
 IP_ADDRESS = "10.10.100.254" # Nueva dirección IP, esta viene por defecto.
@@ -41,7 +41,10 @@ def temperature():
             result = client.read_holding_registers(ADDRESS, 2, slave=2)
             raw_data = struct.pack("!2H", *result.registers)
             temp = struct.unpack('!f', raw_data)[0]
-            temperature_formatted = "{:.2f} °C".format(temp)
+            temperature_formatted = "{:.2f}".format(temp)
+            temperature_record = Temperature(temperature=temperature_formatted, timestamp=datetime.datetime.now())
+            db.session.add(temperature_record)
+            db.session.commit()
         else:
             temperature_formatted = "Error de conexión con el dispositivo Modbus"
     except ModbusIOException as e:
